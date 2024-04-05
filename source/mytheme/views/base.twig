@@ -5,6 +5,13 @@
 		<meta name="viewport" content="width=device-width">
 		<meta name="format-detection" content="telephone=no">
 
+		{% if HOST_MACHINE_IP %}
+			<!-- if development -->
+			<script type="module" src="http://localhost:3000/@vite/client"></script>
+			<script type="module" src="http://localhost:3000/source/index.ts"></script>
+		{% endif %}
+
+
 		{{ function('wp_head') }}
 	</head>
 

@@ -68,8 +68,8 @@ add_filter("timber/twig", function ($twig) {
 			foreach ($sprite->symbol as $symbol) {
 				$symbol_attr = $symbol->attributes();
 
-				if ($id === (string) $symbol_attr->id) {
-					$viewBox = (string) $symbol_attr->viewBox;
+				if ($id === (string)$symbol_attr->id) {
+					$viewBox = (string)$symbol_attr->viewBox;
 					list($min_x, $min_y, $width, $height) = array_map(
 						"floatval",
 						explode(" ", $viewBox)
@@ -108,6 +108,7 @@ add_filter("timber/twig", function ($twig) {
 });
 
 add_filter("timber/context", function ($context) {
+	$context["HOST_MACHINE_IP"] = defined('HOST_MACHINE_IP') ? HOST_MACHINE_IP : false;
 	$context["options"] = get_fields("options");
 
 	$context["about_post"] = Timber::get_post([

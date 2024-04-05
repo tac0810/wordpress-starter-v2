@@ -38,5 +38,6 @@ if [ ! -e "$root_path/index.php" ]; then
 	wp plugin activate advanced-custom-fields-pro --allow-root
 fi
 
+wp config set HOST_MACHINE_IP "$(cat .env.development | grep HOST_MACHINE_IP | cut -d '=' -f2)" --allow-root
 
 wait

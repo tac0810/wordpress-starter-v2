@@ -1,0 +1,16 @@
+{
+  "scripts": {
+    "generate-env": "node generate-env.js",
+    "dev": "node generate-env.js && vite --host",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.19",
+    "postcss-import": "^16.1.0",
+    "tailwindcss": "^3.4.3",
+    "vite": "^5.2.8"
+  },
+  "dependencies": {
+    "final-form": "^4.20.10"
+  }
+}

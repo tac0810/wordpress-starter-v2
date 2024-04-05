@@ -2,16 +2,15 @@ const glob = require("glob");
 const { container, kerning } = require("./tailwind-plugins");
 
 // https://github.com/WebDevStudios/wd_s/pull/804#issuecomment-997018146
-const topLevelPhpFiles = glob.sync("./*.php");
+const topLevelPhpFiles = glob.sync("./source/mytheme/*.php");
 
 /** @type {import('tailwindcss/types').Config} */
 module.exports = {
 	content: [
 		...topLevelPhpFiles,
-		"./inc/**/*.php",
-		"./views/**/*.twig",
-		"./src/**/*.{js,ts}",
-		"./languages/*.po",
+		"./source/mytheme/inc/**/*.php",
+		"./source/**/*.twig",
+		"./source/**/*.{js,ts}",
 	],
 	future: {
 		hoverOnlyWhenSupported: true,

@@ -1,4 +1,5 @@
 .env
+.env.development
 auth.json
 
 /node_modules/
