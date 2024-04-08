@@ -1,12 +1,12 @@
 .env
-.env.development
 auth.json
 
 /node_modules/
+/vendor/
 
-/source/**/node_modules/
-/source/**/vendor/
-/source/**/build/
+/**/node_modules/
+/**/vendor/
+/**/build/
 
 .idea
 

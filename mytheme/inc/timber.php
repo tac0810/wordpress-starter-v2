@@ -137,8 +137,7 @@ add_filter("timber/twig", function ($twig) {
 });
 
 add_filter("timber/context", function ($context) {
-	$context["HOST_MACHINE_IP"] = defined('HOST_MACHINE_IP') ? HOST_MACHINE_IP : false;
-	$context["IS_DEVELOPMENT"] = $_ENV['IS_DEVELOPMENT'] ?: false;
+	$context["IS_DEVELOPMENT"] = $_ENV['IS_DEVELOPMENT'];
 	$context["options"] = get_fields("options");
 
 	$context["about_post"] = Timber::get_post([

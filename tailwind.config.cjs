@@ -1,17 +1,18 @@
 const glob = require("glob");
-const { loadEnv } = require("vite");
 const { container, kerning } = require("./tailwind-plugins.cjs");
 
-const { THEME_NAME } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
+require("dotenv").config();
+
+const THEME_NAME = process.env.THEME_NAME;
 // https://github.com/WebDevStudios/wd_s/pull/804#issuecomment-997018146
-const topLevelPhpFiles = glob.sync(`./source/${THEME_NAME}/*.php`);
+const topLevelPhpFiles = glob.sync(`./${THEME_NAME}/*.php`);
 
 /** @type {import('tailwindcss/types').Config} */
 module.exports = {
   content: [
     ...topLevelPhpFiles,
-    `./source/${THEME_NAME}/inc/**/*.php`,
-    "./source/**/*.twig",
+    `./${THEME_NAME}/inc/**/*.php`,
+    "./**/*.twig",
     "./source/**/*.{js,ts}",
   ],
   future: {

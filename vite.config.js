@@ -4,11 +4,11 @@ export default defineConfig(({ mode }) => {
   const { THEME_NAME } = loadEnv(mode, process.cwd(), "");
   return {
     build: {
-      outDir: `./source/${THEME_NAME}/build`,
+      outDir: `./${THEME_NAME}/build`,
       assetsDir: "",
       manifest: true,
       rollupOptions: {
-        input: "/source/index.ts",
+        input: "./source/index.ts",
       },
     },
     server: {

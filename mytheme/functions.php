@@ -84,9 +84,11 @@ add_filter("show_admin_bar", "__return_false");
 
 function renderTemplates($templates, $context)
 {
+	$IS_DEVELOPMENT = $_ENV['IS_DEVELOPMENT'];
 	$render = Timber::compile($templates, $context);
-	if (!is_admin() && strpos($_SERVER['HTTP_HOST'], 'localhost') === false && defined('HOST_MACHINE_IP')) {
-		echo str_replace('localhost', HOST_MACHINE_IP, $render);
+	if ($IS_DEVELOPMENT && !is_admin() && !str_contains($_SERVER['HTTP_HOST'], 'localhost')) {
+		$hostname = parse_url($_SERVER['HTTP_HOST'], PHP_URL_HOST);
+		echo str_replace('localhost', $hostname, $render);
 	} else {
 		echo $render;
 	}

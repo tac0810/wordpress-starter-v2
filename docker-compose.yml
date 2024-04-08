@@ -10,8 +10,8 @@ services:
     volumes:
       - "./.env:/var/www/html/.env"
       - "./auth.json:/var/www/html/auth.json"
-      - "./composer.json:/var/www/html/composer.json"
-      - "./source/${THEME_NAME}:/var/www/html/wp-content/themes/${THEME_NAME}"
+      - "./services/wordpress/composer.json:/var/www/html/composer.json"
+      - "./${THEME_NAME}:/var/www/html/wp-content/themes/${THEME_NAME}"
     environment:
       IS_DEVELOPMENT: 1
       COMPOSER_ALLOW_SUPERUSER: 1

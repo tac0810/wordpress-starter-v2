@@ -1,8 +1,7 @@
 {
   "scripts": {
     "setup:init": "node scripts/init.cjs",
-    "setup:add-local-ip": "node scripts/add-local-ip.cjs",
-    "dev": "npm run setup:add-local-ip && vite --host",
+    "dev": "vite --host",
     "build": "vite build"
   },
   "devDependencies": {
@@ -11,6 +10,7 @@
     "alpinejs": "^3.10.4",
     "autoprefixer": "^10.4.19",
     "camelcase": "^7.0.0",
+    "dotenv": "^16.4.5",
     "final-form": "^4.20.9",
     "postcss-import": "^16.1.0",
     "prettier": "^3.2.5",
