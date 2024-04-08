@@ -20,11 +20,8 @@ async function generateEnvFile(themeName) {
 
 async function renameTheme(themeName) {
   try {
-    // 変更前のディレクトリ名
     const oldDirectoryName = path.resolve(root, "mytheme");
-    // 変更後のディレクトリ名
     const newDirectoryName = path.resolve(root, themeName);
-    // ディレクトリ名を変更する
     await fs.rename(oldDirectoryName, newDirectoryName);
   } catch (error) {
     console.error(error);
@@ -49,12 +46,30 @@ async function generateAuthJson(token) {
   }
 }
 
+async function generateThemeStyle(themeName) {
+  const themeStyleFilePath = path.resolve(root, themeName, "style.css");
+  try {
+    const content = `/*
+Theme Name: ${themeName}
+*/
+`;
+    await fs.writeFile(themeStyleFilePath, content);
+    console.log(
+      "style.css file has been created and updated with new THEME_NAME:",
+      themeName,
+    );
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 (async () => {
   const themeName = await input({ message: "Input theme name..." });
 
   await generateEnvFile(themeName);
 
   await renameTheme(themeName);
+  await generateThemeStyle(themeName);
 
   const token = await password({ message: "Input ACF PRO LICENCE KEY..." });
 
