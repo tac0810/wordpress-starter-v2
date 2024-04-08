@@ -58,6 +58,35 @@ add_filter("timber/twig", function ($twig) {
 	);
 
 	$twig->addFunction(
+		new Timber\Twig_Function("build_assets", function () {
+			$manifest = file_get_contents(dirname(__DIR__) . "/build/.vite/manifest.json");
+
+			if (!isset($manifest)) {
+				return null;
+			}
+
+			$manifest = json_decode($manifest, true);
+			$entry = $manifest["source/index.ts"];
+			$build_path = get_template_directory_uri() . '/build/';
+
+			$html = "<!-- production build -->";
+			$html .= sprintf('<script type="module" src="%s"></script>', $build_path . $entry['file']);
+			$html .= "\n";
+
+			foreach ($entry['dynamicImports'] as $dynamicImport) {
+				$import = $manifest[$dynamicImport];
+				$html .= sprintf('<script type="module" src="%s"></script>', $build_path . $import['file']);
+			}
+
+			foreach ($entry['css'] as $css) {
+				$html .= sprintf('<link rel="stylesheet" href="%s" />', $build_path . $css);
+			}
+
+			return $html;
+		})
+	);
+
+	$twig->addFunction(
 		new Timber\Twig_Function("sprite", function ($context, $id, $attr = "") {
 			$sprite_path = sprintf("/build/sprites/%s.svg", $context);
 
@@ -109,6 +138,7 @@ add_filter("timber/twig", function ($twig) {
 
 add_filter("timber/context", function ($context) {
 	$context["HOST_MACHINE_IP"] = defined('HOST_MACHINE_IP') ? HOST_MACHINE_IP : false;
+	$context["IS_DEVELOPMENT"] = $_ENV['IS_DEVELOPMENT'] ?: false;
 	$context["options"] = get_fields("options");
 
 	$context["about_post"] = Timber::get_post([

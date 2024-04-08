@@ -1,18 +1,19 @@
-import "./stores";
 import Alpine from "alpinejs";
+import collapse from '@alpinejs/collapse';
 import focus from "@alpinejs/focus";
 import ui from "@alpinejs/ui";
-import components from "./components";
-import stores from "./stores";
 
-if (process.env.NODE_ENV !== "production") {
-	console.log({ NODE_ENV: process.env.NODE_ENV });
+if (import.meta.env.MODE !== "production") {
+	console.log(import.meta.env);
 }
 
-Alpine.plugin(focus);
-Alpine.plugin(ui);
-Alpine.plugin(components);
-Alpine.plugin(stores);
+(async () => {
+	Alpine.plugin(collapse);
+	Alpine.plugin(focus);
+	Alpine.plugin(ui);
 
-(window as any).Alpine = Alpine;
-Alpine.start();
+	await import('./alpinejs');
+
+	(window as any).Alpine = Alpine;
+	Alpine.start();
+})();

@@ -30,14 +30,14 @@ if [ ! -e "$root_path/index.php" ]; then
 	wp site switch-language ja --allow-root
 	wp theme activate "$WORDPRESS_THEME_NAME" --allow-root
 
+  composer config --no-plugins allow-plugins.composer/installers true
+  composer install
+  wp plugin activate advanced-custom-fields-pro --allow-root
+
 	cd $theme_path
 	composer install --no-plugins --no-scripts &
-	cd $root_path
-	composer config --no-plugins allow-plugins.composer/installers true
-	composer install
-	wp plugin activate advanced-custom-fields-pro --allow-root
 fi
 
-wp config set HOST_MACHINE_IP "$(cat .env.development | grep HOST_MACHINE_IP | cut -d '=' -f2)" --allow-root
+wp config set HOST_MACHINE_IP "$(cat .env | grep HOST_MACHINE_IP | cut -d '=' -f2)" --allow-root
 
 wait

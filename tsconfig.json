@@ -23,7 +23,8 @@
 		"forceConsistentCasingInFileNames": true,
 
 		/* Completeness */
-		"skipLibCheck": true
+		"skipLibCheck": true,
+		"types": ["vite/client"]
 	},
 	"include": ["source/**/*"]
 }

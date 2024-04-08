@@ -9,11 +9,11 @@ services:
       - 8080:80
     volumes:
       - "./.env:/var/www/html/.env"
-      - "./.env.development:/var/www/html/.env.development"
       - "./auth.json:/var/www/html/auth.json"
       - "./composer.json:/var/www/html/composer.json"
       - "./source/${THEME_NAME}:/var/www/html/wp-content/themes/${THEME_NAME}"
     environment:
+      IS_DEVELOPMENT: 1
       COMPOSER_ALLOW_SUPERUSER: 1
       COMPOSER_NO_INTERACTION: 1
       WORDPRESS_THEME_NAME: "${THEME_NAME}"

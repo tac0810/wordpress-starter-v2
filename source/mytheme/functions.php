@@ -4,6 +4,8 @@ namespace WordPressStarter\Theme;
 
 use Timber;
 
+define("THEME_NAME", $_ENV['WORDPRESS_THEME_NAME']);
+
 require_once __DIR__ . "/vendor/autoload.php";
 
 require_once __DIR__ . "/inc/admin.php";
@@ -18,7 +20,7 @@ if (!isset($content_width)) {
 }
 
 add_action("after_setup_theme", function () {
-	load_theme_textdomain("mytheme", __DIR__ . "/languages");
+	load_theme_textdomain(THEME_NAME, __DIR__ . "/languages");
 
 	add_theme_support("title-tag");
 
@@ -47,41 +49,6 @@ add_action("after_setup_theme", function () {
 	add_theme_support("align-wide");
 	add_theme_support("responsive-embeds");
 });
-
-//add_filter(
-//	"script_loader_tag",
-//	function ($tag, $handle, $src) {
-//		if ($handle === "mytheme-script") {
-//			$tag = sprintf(
-//				"<script defer src='%s' id='%s-js'></script>\n",
-//				$src,
-//				esc_attr($handle)
-//			);
-//		}
-//
-//		return $tag;
-//	},
-//	10,
-//	3
-//);
-//
-//add_action("wp_enqueue_scripts", function () {
-//	$script_info = include __DIR__ . "/build/index.asset.php";
-//
-//	wp_enqueue_style(
-//		"mytheme-style",
-//		get_template_directory_uri() . "/build/index.css",
-//		[],
-//		$script_info["version"]
-//	);
-//
-//	wp_enqueue_script(
-//		"mytheme-script",
-//		get_template_directory_uri() . "/build/index.js",
-//		$script_info["dependencies"],
-//		$script_info["version"]
-//	);
-//});
 
 add_filter("should_load_separate_core_block_assets", "__return_true");
 

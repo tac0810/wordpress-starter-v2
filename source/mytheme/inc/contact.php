@@ -6,7 +6,7 @@ require_once APP_PATH . "/BaseFormService.php";
 use FormApp\BaseFormService;
 
 add_action("rest_api_init", function () {
-	register_rest_route("mytheme", "/contact/field_data", [
+	register_rest_route(THEME_NAME, "/contact/field_data", [
 		[
 			"permission_callback" => "__return_true",
 			"methods" => WP_REST_Server::READABLE,
@@ -28,7 +28,7 @@ add_action("rest_api_init", function () {
 		],
 	]);
 
-	register_rest_route("mytheme", "/contact/send", [
+	register_rest_route(THEME_NAME, "/contact/send", [
 		[
 			"permission_callback" => "__return_true",
 			"methods" => WP_REST_Server::CREATABLE,

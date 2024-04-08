@@ -1,16 +1,28 @@
 {
   "scripts": {
-    "generate-env": "node generate-env.js",
-    "dev": "node generate-env.js && vite --host",
+    "setup:init": "node scripts/init.cjs",
+    "setup:add-local-ip": "node scripts/add-local-ip.cjs",
+    "dev": "npm run setup:add-local-ip && vite --host",
     "build": "vite build"
   },
   "devDependencies": {
+    "@inquirer/prompts": "^4.3.2",
+    "@types/alpinejs": "^3.13.10",
+    "alpinejs": "^3.10.4",
     "autoprefixer": "^10.4.19",
+    "camelcase": "^7.0.0",
+    "final-form": "^4.20.9",
     "postcss-import": "^16.1.0",
+    "prettier": "^3.2.5",
     "tailwindcss": "^3.4.3",
     "vite": "^5.2.8"
   },
   "dependencies": {
+    "@alpinejs/collapse": "3.13.3",
+    "@alpinejs/focus": "3.13.3",
+    "@alpinejs/ui": "3.13.3-beta.4",
+    "alpinejs": "^3.13.8",
     "final-form": "^4.20.10"
-  }
+  },
+  "type": "module"
 }

@@ -3,7 +3,7 @@
 namespace WordPressStarter\Theme;
 
 add_action("init", function () {
-	register_post_type("mytheme_news", [
+	register_post_type(THEME_NAME . "_news", [
 		"label" => "お知らせ",
 		"public" => true,
 		"supports" => ["title", "editor", "thumbnail"],
@@ -13,8 +13,8 @@ add_action("init", function () {
 	]);
 
 	register_taxonomy(
-		"mytheme_news_category",
-		["mytheme_news"],
+		THEME_NAME . "_news_category",
+		[THEME_NAME . "_news"],
 		[
 			"label" => "カテゴリー",
 			"hierarchical" => true,
@@ -25,7 +25,7 @@ add_action("init", function () {
 
 	add_rewrite_rule(
 		'news/category/([^/]+)/?$',
-		'index.php?post_type=mytheme_news&mytheme_news_category=$matches[1]',
+		sprintf('index.php?post_type=%s_news&%s_news_category=$matches[1]', THEME_NAME, THEME_NAME),
 		"top"
 	);
 });
@@ -35,7 +35,7 @@ add_action("pre_get_posts", function ($query) {
 		return;
 	}
 
-	if (is_post_type_archive("mytheme_news") || is_tax("mytheme_news_category")) {
+	if (is_post_type_archive(THEME_NAME . "_news") || is_tax(THEME_NAME . "_news_category")) {
 		$query->set("posts_per_page", 12);
 	}
 });
