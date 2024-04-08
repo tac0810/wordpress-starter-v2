@@ -1,13 +1,15 @@
 const fs = require("fs").promises;
 const path = require("path");
 const { input, password } = require("@inquirer/prompts");
+const { getLocalIP } = require("./add-local-ip.cjs");
 
 const root = path.dirname(__dirname);
 
 async function generateEnvFile(themeName) {
   const envFilePath = path.resolve(root, ".env");
+  const localIpAddress = getLocalIP();
   try {
-    const content = `THEME_NAME=${themeName}\nVITE_THEME_NAME=${themeName}\n`;
+    const content = `THEME_NAME=${themeName}\nVITE_THEME_NAME=${themeName}\nHOST_MACHINE_IP=${localIpAddress}`;
     await fs.writeFile(envFilePath, content);
     console.log(
       ".env file has been created and updated with new THEME_NAME:",
