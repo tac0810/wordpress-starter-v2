@@ -138,6 +138,8 @@ add_filter("timber/twig", function ($twig) {
 
 add_filter("timber/context", function ($context) {
 	$context["IS_DEVELOPMENT"] = $_ENV['IS_DEVELOPMENT'];
+	$context["IS_VITE_RUNNING"] = checkViteConnection();
+
 	$context["options"] = get_fields("options");
 
 	$context["about_post"] = Timber::get_post([
@@ -147,3 +149,22 @@ add_filter("timber/context", function ($context) {
 
 	return $context;
 });
+
+function checkViteConnection()
+{
+
+	if (!$_ENV['IS_DEVELOPMENT']) {
+		return false;
+	}
+
+	$host = 'host.docker.internal';
+	$port = 3000;
+	$connection = @fsockopen($host, $port, $errno, $errstr, 5); // 5秒のタイムアウト
+
+	if ($connection) {
+		fclose($connection);
+		return true;
+	} else {
+		return false;
+	}
+}
