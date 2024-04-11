@@ -1,6 +1,6 @@
 const fs = require("fs").promises;
 const path = require("path");
-const { input, password } = require("@inquirer/prompts");
+const { input, password, confirm } = require("@inquirer/prompts");
 
 const root = path.dirname(__dirname);
 
@@ -67,11 +67,22 @@ Theme Name: ${themeName}
   const themeName = await input({ message: "Input theme name..." });
 
   await generateEnvFile(themeName);
+  
+  const confirmRename = await confirm({
+    message: `Rename mytheme to ${themeName}?`,
+    default: false
+  });
+  
+  if (confirmRename) {
+    await renameTheme(themeName);
+    await generateThemeStyle(themeName);
+  }
 
-  await renameTheme(themeName);
-  await generateThemeStyle(themeName);
-
-  const token = await password({ message: "Input ACF PRO LICENCE KEY..." });
-
-  await generateAuthJson(token);
+  const confirmGenerateAuthJson = await confirm({
+    message: `Generate auth.json?`,
+  });
+  if (confirmGenerateAuthJson) {
+    const token = await password({ message: "Input ACF PRO LICENCE KEY..." });
+    await generateAuthJson(token);
+  }
 })();
