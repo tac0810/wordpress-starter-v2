@@ -8,6 +8,8 @@ auth.json
 /**/vendor/
 /**/build/
 
+*.log
+
 .idea
 
 .DS_Store
