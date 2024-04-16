@@ -2,7 +2,8 @@
   "scripts": {
     "setup:init": "node scripts/init.cjs",
     "dev": "vite --host",
-    "build": "vite build"
+    "build": "vite build",
+    "logger": "node scripts/logger.cjs"
   },
   "devDependencies": {
     "@inquirer/prompts": "^4.3.2",
@@ -14,6 +15,7 @@
     "final-form": "^4.20.9",
     "postcss-import": "^16.1.0",
     "prettier": "^3.2.5",
+    "tail": "^2.2.6",
     "tailwindcss": "^3.4.3",
     "vite": "^5.2.8"
   },
