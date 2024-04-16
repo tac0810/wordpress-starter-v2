@@ -4,7 +4,7 @@ namespace WordPressStarter\Theme;
 
 use Timber;
 
-define("THEME_NAME", $_ENV['WORDPRESS_THEME_NAME']);
+define("THEME_NAME", basename(__DIR__));
 
 require_once __DIR__ . "/vendor/autoload.php";
 
