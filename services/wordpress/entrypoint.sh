@@ -28,6 +28,8 @@ if [ ! -e "$root_path/index.php" ]; then
 
 	wp language core install ja --allow-root
 	wp site switch-language ja --allow-root
+
+	wp plugin install 'https://downloads.wordpress.org/plugin/intuitive-custom-post-order.3.1.2.zip' --activate --allow-root
 fi
 
 cd $root_path
@@ -37,6 +39,7 @@ wp plugin activate advanced-custom-fields-pro --allow-root
 
 cd $theme_path
 composer install --no-plugins --no-scripts &
+touch my-errors.log
 
 cd $root_path
 wp theme activate "$WORDPRESS_THEME_NAME" --allow-root
