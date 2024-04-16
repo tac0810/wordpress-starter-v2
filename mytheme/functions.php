@@ -9,6 +9,8 @@ define("THEME_NAME", $_ENV['WORDPRESS_THEME_NAME']);
 require_once __DIR__ . "/vendor/autoload.php";
 
 require_once __DIR__ . "/inc/_helper.php";
+
+require_once __DIR__ . "/inc/dashboard.php";
 require_once __DIR__ . "/inc/admin.php";
 require_once __DIR__ . "/inc/blocks.php";
 require_once __DIR__ . "/inc/news.php";
