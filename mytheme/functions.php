@@ -8,6 +8,7 @@ define("THEME_NAME", $_ENV['WORDPRESS_THEME_NAME']);
 
 require_once __DIR__ . "/vendor/autoload.php";
 
+require_once __DIR__ . "/inc/_helper.php";
 require_once __DIR__ . "/inc/admin.php";
 require_once __DIR__ . "/inc/blocks.php";
 require_once __DIR__ . "/inc/news.php";
@@ -81,15 +82,3 @@ add_filter(
 );
 
 add_filter("show_admin_bar", "__return_false");
-
-function renderTemplates($templates, $context)
-{
-	$IS_DEVELOPMENT = $_ENV['IS_DEVELOPMENT'];
-	$render = Timber::compile($templates, $context);
-	if ($IS_DEVELOPMENT && !is_admin() && !str_contains($_SERVER['HTTP_HOST'], 'localhost')) {
-		$hostname = parse_url($_SERVER['HTTP_HOST'], PHP_URL_HOST);
-		echo str_replace('localhost', $hostname, $render);
-	} else {
-		echo $render;
-	}
-}
