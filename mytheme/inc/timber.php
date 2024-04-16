@@ -3,62 +3,53 @@
 namespace WordPressStarter\Theme;
 
 use Timber;
+use Twig;
 
-new Timber\Timber();
+Timber\Timber::init();
 
 Timber::$dirname = ["views"];
 
-add_filter("timber/twig", function ($twig) {
-	foreach (
-		// https://github.com/timber/timber/blob/91f4a50d8fe2e1139dc145c8752571ecf0d0c518/lib/Twig.php#L55-L87
-		[
-			"get_post" => [
-				"callable" => [Timber::class, "get_post"],
-			],
-			"get_image" => [
-				"callable" => [Timber::class, "get_image"],
-			],
-			"get_attachment" => [
-				"callable" => [Timber::class, "get_attachment"],
-			],
-			"get_posts" => [
-				"callable" => [Timber::class, "get_posts"],
-			],
-			"get_attachment_by" => [
-				"callable" => [Timber::class, "get_attachment_by"],
-			],
-			"get_term" => [
-				"callable" => [Timber::class, "get_term"],
-			],
-			"get_terms" => [
-				"callable" => [Timber::class, "get_terms"],
-			],
-			"get_user" => [
-				"callable" => [Timber::class, "get_user"],
-			],
-			"get_users" => [
-				"callable" => [Timber::class, "get_users"],
-			],
-			"get_comment" => [
-				"callable" => [Timber::class, "get_comment"],
-			],
-			"get_comments" => [
-				"callable" => [Timber::class, "get_comments"],
-			],
-		]
-		as $name => $function
-	) {
-		$twig->addFunction(new Timber\Twig_Function($name, $function["callable"]));
-	}
 
+function debug( $obj, $label = '' ) {
+	$label = "[Debug] : {$label}";
+	$label .= ' in ';
+	$traces = debug_backtrace();
+	$count = 0;
+	foreach ( $traces as $trace ) {
+		if ( isset( $trace[ 'file' ], $trace[ 'line' ] ) && __FILE__ != $trace[ 'file' ] ) {
+			$label .= $trace[ 'file' ] . ' (' . $trace[ 'line' ] . ')';
+			if ( ++$count >= 5 ) {
+				break;
+			} else {
+				$label .= '<br />';
+			}
+		}
+	}
+	echo '<div style="font:11px/1.2 Lucida Grande, Verdana, Geneva, Sans-serif; margin: 1em 0; padding: 0.5em; background:#e9e9e9; border:1px solid #D0D0D0;">';
+	if ( strlen( $label ) ) {
+		echo '<strong>' . $label . '</strong>';
+	}
+	echo '<pre style="display: block; background:#F4F4F4; border:1px solid #D0D0D0; color: #002166; margin:0.5em 0; padding:1em;">';
+	if ( is_bool( $obj ) ) {
+		echo (bool) $obj ? 'true' : 'false';
+	} elseif ( is_array( $obj ) || is_object( $obj ) ) {
+		print_r( $obj );
+	} else {
+		echo $obj;
+	}
+	echo '</pre>';
+	echo '</div>';
+}
+
+add_filter("timber/twig", function ($twig) {
 	$twig->addFunction(
-		new Timber\Twig_Function("get_menu", function ($slug, $options = []) {
-			return new Timber\Menu($slug, $options);
+		new Twig\TwigFunction("debug", function ($value) {
+			return debug($value);
 		})
 	);
 
 	$twig->addFunction(
-		new Timber\Twig_Function("build_assets", function () {
+		new Twig\TwigFunction("build_assets", function () {
 			$manifest = file_get_contents(dirname(__DIR__) . "/build/.vite/manifest.json");
 
 			if (!isset($manifest)) {
@@ -87,7 +78,7 @@ add_filter("timber/twig", function ($twig) {
 	);
 
 	$twig->addFunction(
-		new Timber\Twig_Function("sprite", function ($context, $id, $attr = "") {
+		new Twig\TwigFunction("sprite", function ($context, $id, $attr = "") {
 			$sprite_path = sprintf("/build/sprites/%s.svg", $context);
 
 			$sprite = simplexml_load_string(file_get_contents(dirname(__DIR__) . $sprite_path));
@@ -150,9 +141,9 @@ add_filter("timber/context", function ($context) {
 	return $context;
 });
 
+
 function checkViteConnection()
 {
-
 	if (!$_ENV['IS_DEVELOPMENT']) {
 		return false;
 	}
