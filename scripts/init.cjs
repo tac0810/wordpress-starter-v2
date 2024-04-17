@@ -9,10 +9,7 @@ async function generateEnvFile(themeName) {
   try {
     const content = `THEME_NAME=${themeName}\nVITE_THEME_NAME=${themeName}`;
     await fs.writeFile(envFilePath, content);
-    console.log(
-      ".env file has been created and updated with new THEME_NAME:",
-      themeName,
-    );
+    console.log(".env file has been created and updated with new THEME_NAME:", themeName);
   } catch (error) {
     console.error(error);
   }
@@ -54,10 +51,7 @@ Theme Name: ${themeName}
 */
 `;
     await fs.writeFile(themeStyleFilePath, content);
-    console.log(
-      "style.css file has been created and updated with new THEME_NAME:",
-      themeName,
-    );
+    console.log("style.css file has been created and updated with new THEME_NAME:", themeName);
   } catch (error) {
     console.error(error);
   }
@@ -67,12 +61,12 @@ Theme Name: ${themeName}
   const themeName = await input({ message: "Input theme name..." });
 
   await generateEnvFile(themeName);
-  
+
   const confirmRename = await confirm({
     message: `Rename mytheme to ${themeName}?`,
-    default: false
+    default: false,
   });
-  
+
   if (confirmRename) {
     await renameTheme(themeName);
     await generateThemeStyle(themeName);

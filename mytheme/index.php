@@ -9,7 +9,7 @@ $context = Timber::context();
 $templates = ["index.twig"];
 
 if (is_home()) {
-	array_unshift($templates, "front-page.twig", "home.twig");
+  array_unshift($templates, "front-page.twig", "home.twig");
 }
 
 renderTemplates($templates, $context);

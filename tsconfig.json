@@ -1,30 +1,30 @@
 {
-	"compilerOptions": {
-		/* Visit https://aka.ms/tsconfig.json to read more about this file */
+  "compilerOptions": {
+    /* Visit https://aka.ms/tsconfig.json to read more about this file */
 
-		/* Language and Environment */
-		"target": "ESNext",
-		"lib": ["DOM", "DOM.Iterable", "ESNext"],
+    /* Language and Environment */
+    "target": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
 
-		/* Modules */
-		"module": "ESNext",
-		"moduleResolution": "Node",
-		"resolveJsonModule": true,
+    /* Modules */
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
 
-		/* JavaScript Support */
-		"allowJs": true,
+    /* JavaScript Support */
+    "allowJs": true,
 
-		/* Emit */
-		"noEmit": true,
+    /* Emit */
+    "noEmit": true,
 
-		/* Interop Constraints */
-		"allowSyntheticDefaultImports": true,
-		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true,
+    /* Interop Constraints */
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
 
-		/* Completeness */
-		"skipLibCheck": true,
-		"types": ["vite/client"]
-	},
-	"include": ["source/**/*"]
+    /* Completeness */
+    "skipLibCheck": true,
+    "types": ["vite/client"]
+  },
+  "include": ["source/**/*"]
 }

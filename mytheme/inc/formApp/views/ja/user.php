@@ -1,10 +1,10 @@
 ======================================================
 
 <?php foreach ($values as $value) {
-	$label = $value["label"];
-	$data = $value["value"];
+  $label = $value["label"];
+  $data = $value["value"];
 
-	echo <<<EOM
+  echo <<<EOM
 ■ {$label}
 {$data}
 

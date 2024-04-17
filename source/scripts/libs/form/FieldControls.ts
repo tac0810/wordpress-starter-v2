@@ -60,13 +60,10 @@ export default class FieldControls {
   }
 
   static setUnsubscribing(hiddenItemNames: string[]) {
-    return [...new Set(hiddenItemNames)].reduce(
-      (previousValue, currentValue, currentIndex) => {
-        previousValue[currentValue] = true;
-        return previousValue;
-      },
-      {},
-    );
+    return [...new Set(hiddenItemNames)].reduce((previousValue, currentValue, currentIndex) => {
+      previousValue[currentValue] = true;
+      return previousValue;
+    }, {});
   }
 
   static getCustomErrorMessage(errorMessages) {
@@ -74,13 +71,9 @@ export default class FieldControls {
       if (/:/.test(validation)) {
         return (
           errorMessages[`${name}.${validation}`] ||
-          errorMessages[
-            `${name}.${validation.substring(0, validation.indexOf(":"))}`
-          ] ||
+          errorMessages[`${name}.${validation.substring(0, validation.indexOf(":"))}`] ||
           errorMessages.base[validation] ||
-          errorMessages.base[
-            validation.substring(0, validation.indexOf(":"))
-          ] ||
+          errorMessages.base[validation.substring(0, validation.indexOf(":"))] ||
           errorMessages.base["*"]
         );
       } else {
@@ -93,26 +86,17 @@ export default class FieldControls {
     };
   }
 
-  static setHiddenItemNames(
-    dependedItems: DependedItem[],
-    initialValues,
-  ): string[] {
+  static setHiddenItemNames(dependedItems: DependedItem[], initialValues): string[] {
     return dependedItems
       .map((dependedItem) => {
         const initialValue = initialValues[dependedItem.controller];
 
         if (initialValue) {
-          if (
-            !!dependedItem.show &&
-            dependedItem.show.indexOf(initialValue) === -1
-          ) {
+          if (!!dependedItem.show && dependedItem.show.indexOf(initialValue) === -1) {
             return dependedItem.targets;
           }
 
-          if (
-            !!dependedItem.hide &&
-            dependedItem.hide.indexOf(initialValue) !== -1
-          ) {
+          if (!!dependedItem.hide && dependedItem.hide.indexOf(initialValue) !== -1) {
             return dependedItem.targets;
           }
         } else {
@@ -143,10 +127,7 @@ export default class FieldControls {
     }
   }
 
-  static getOrderedValues(
-    fieldItems: FieldItem[],
-    values: Record<string, string | string[]>,
-  ) {
+  static getOrderedValues(fieldItems: FieldItem[], values: Record<string, string | string[]>) {
     return fieldItems
       .filter((item) => !!values[item.name])
       .map((item) => {
@@ -198,8 +179,7 @@ export default class FieldControls {
       const item = this.fieldItemsCollection.get(name);
       const validations = validationsData[name];
       const value = values[name];
-      const getErrorMessage =
-        FieldControls.getCustomErrorMessage(errorMessages);
+      const getErrorMessage = FieldControls.getCustomErrorMessage(errorMessages);
 
       // require
       if (validations.indexOf("required") !== -1) {
@@ -265,37 +245,29 @@ export default class FieldControls {
   ): FieldItemsCollection[] {
     return [...fields].map((field) => {
       const name = field.dataset.field;
-      const label = field.querySelector(
-        `[${this.config.FIELD_LABEL}]`,
-      ).textContent;
-      const control: InputElement = field.querySelector(
-        `[${this.config.FIELD_CONTROL}]`,
-      );
+      const label = field.querySelector(`[${this.config.FIELD_LABEL}]`).textContent;
+      const control: InputElement = field.querySelector(`[${this.config.FIELD_CONTROL}]`);
       const tagName = control.tagName.toLowerCase();
       const type = tagName !== "input" ? tagName : control.type;
       const options = {};
-      const validations = !!fieldData.validations[name]
-        ? fieldData.validations[name]
-        : [];
+      const validations = !!fieldData.validations[name] ? fieldData.validations[name] : [];
 
       if (["radio", "checkbox"].indexOf(type) !== -1) {
-        options["data"] = [
-          ...field.querySelectorAll(`[${this.config.FIELD_CONTROL}]`),
-        ].map((control: InputElement) => {
-          return {
-            label: control.value,
-            value: control.value,
-          };
-        });
+        options["data"] = [...field.querySelectorAll(`[${this.config.FIELD_CONTROL}]`)].map(
+          (control: InputElement) => {
+            return {
+              label: control.value,
+              value: control.value,
+            };
+          },
+        );
       }
 
       if (type === "select") {
-        options["data"] = [...control.querySelectorAll("option")].map(
-          (option) => ({
-            label: option.textContent,
-            value: option.value,
-          }),
-        );
+        options["data"] = [...control.querySelectorAll("option")].map((option) => ({
+          label: option.textContent,
+          value: option.value,
+        }));
       }
 
       return {
@@ -326,10 +298,7 @@ export default class FieldControls {
     // show item
     parent.style.display = "";
 
-    const registerEventListeners = (
-      input: InputElement,
-      fieldState: FinalForm.FieldState<any>,
-    ) => {
+    const registerEventListeners = (input: InputElement, fieldState: FinalForm.FieldState<any>) => {
       const { blur, change, focus } = fieldState;
       const registered = input.getAttribute(this.config.FIELD_REGISTRATION);
       if (!registered) {
@@ -346,10 +315,7 @@ export default class FieldControls {
       }
     };
 
-    const updateStateValue = (
-      input: InputElement,
-      fieldState: FinalForm.FieldState<any>,
-    ) => {
+    const updateStateValue = (input: InputElement, fieldState: FinalForm.FieldState<any>) => {
       const { value } = fieldState;
       if (input.type === "checkbox") {
         (<HTMLInputElement>input).checked = !!value;
@@ -379,9 +345,7 @@ export default class FieldControls {
           this.$root.querySelector(
             `[${this.config.FIELD}="${rawName}"] [${this.config.FIELD_CONTROL}]`,
           ),
-          this.$root.querySelector(
-            `[${this.config.FIELD_ERROR}="${rawName}"]`,
-          ) as HTMLElement,
+          this.$root.querySelector(`[${this.config.FIELD_ERROR}="${rawName}"]`) as HTMLElement,
           touched && error,
           !!error && error,
         );
@@ -402,11 +366,7 @@ export default class FieldControls {
     const { dependedItems } = this.fieldData;
 
     // // for checkbox or some else
-    const multiRegisteredFields = (
-      value,
-      dependedItem: DependedItem,
-      controllerName: string,
-    ) => {
+    const multiRegisteredFields = (value, dependedItem: DependedItem, controllerName: string) => {
       const dependedShows = dependedItems
         .filter(({ show }) => !!show)
         .map(({ show }) => show)
@@ -417,41 +377,31 @@ export default class FieldControls {
         .map(({ hide }) => hide)
         .flat();
 
-      const fieldItem = this.$root.querySelector(
-        `[${this.config.FIELD}="${controllerName}"]`,
+      const fieldItem = this.$root.querySelector(`[${this.config.FIELD}="${controllerName}"]`);
+      const data = [...fieldItem.querySelectorAll(`[${this.config.FIELD_CONTROL}]`)].map(
+        (control: HTMLInputElement) => {
+          return {
+            label: "",
+            value: control.value,
+          };
+        },
       );
-      const data = [
-        ...fieldItem.querySelectorAll(`[${this.config.FIELD_CONTROL}]`),
-      ].map((control: HTMLInputElement) => {
-        return {
-          label: "",
-          value: control.value,
-        };
-      });
-      const checkBoxRawValuesMapped = FieldControls.getCheckBoxRawValues(
-        value,
-        data,
-      ).map((d) => d.value);
+      const checkBoxRawValuesMapped = FieldControls.getCheckBoxRawValues(value, data).map(
+        (d) => d.value,
+      );
 
       let isSubscribeItem = null;
 
       if (dependedShows.length) {
-        isSubscribeItem = checkBoxRawValuesMapped.some(
-          (e) => dependedShows.indexOf(e) !== -1,
-        );
+        isSubscribeItem = checkBoxRawValuesMapped.some((e) => dependedShows.indexOf(e) !== -1);
       } else if (dependedHides.length) {
-        isSubscribeItem = !checkBoxRawValuesMapped.some(
-          (e) => dependedHides.indexOf(e) !== -1,
-        );
+        isSubscribeItem = !checkBoxRawValuesMapped.some((e) => dependedHides.indexOf(e) !== -1);
       }
 
       if (isSubscribeItem) {
         this.controls
           .filter(({ name }) => {
-            return (
-              dependedItem.targets.indexOf(FieldControls.getRawName(name)) !==
-              -1
-            );
+            return dependedItem.targets.indexOf(FieldControls.getRawName(name)) !== -1;
           })
           .forEach((control) => {
             this.unsubscribing[FieldControls.getRawName(control.name)] = false;
@@ -463,8 +413,7 @@ export default class FieldControls {
           this.unsubscribing[FieldControls.getRawName(name)] = true;
           if (target.type === "checkbox") {
             target.options.data.forEach((_, index) => {
-              this.unsubscribes[`${name}[${index}]`] &&
-                this.unsubscribes[`${name}[${index}]`]();
+              this.unsubscribes[`${name}[${index}]`] && this.unsubscribes[`${name}[${index}]`]();
             });
             return;
           }
@@ -531,8 +480,7 @@ export default class FieldControls {
 
     const body = JSON.stringify({
       token: this.token,
-      user_email: this._fieldValuesCollection.get(this.config.AUTO_REPLY_TARGET)
-        .value,
+      user_email: this._fieldValuesCollection.get(this.config.AUTO_REPLY_TARGET).value,
       values: Array.from(this._fieldValuesCollection)
         .map((item) => item[1])
         .filter((item) => !!item.value),
@@ -604,10 +552,7 @@ export default class FieldControls {
 
   public formApi: FinalForm.FormApi = null;
 
-  public get fieldValuesCollection(): Map<
-    string,
-    { label: string; value: string }
-  > {
+  public get fieldValuesCollection(): Map<string, { label: string; value: string }> {
     return this._fieldValuesCollection;
   }
 
@@ -621,11 +566,7 @@ export default class FieldControls {
           .join(", ");
       }
 
-      if (
-        !item.validations.some(
-          (validation) => validation.indexOf("same") !== -1,
-        )
-      ) {
+      if (!item.validations.some((validation) => validation.indexOf("same") !== -1)) {
         this.fieldValuesCollection.set(key, {
           label: item.label,
           value,
@@ -641,17 +582,13 @@ export default class FieldControls {
       onError,
       onValidate,
     }: {
-      customInitialValues?: (
-        initialValues: Record<string, any>,
-      ) => Record<string, any>;
+      customInitialValues?: (initialValues: Record<string, any>) => Record<string, any>;
       onError: (e) => void;
       onValidate: (values: Record<string, any>) => void;
     },
   ) {
     try {
-      const res = await FieldControls.getFieldData(
-        this.setEndPoint("field_data"),
-      );
+      const res = await FieldControls.getFieldData(this.setEndPoint("field_data"));
       if (!res.fieldData) {
         throw new Error(res.message);
       }
@@ -674,10 +611,7 @@ export default class FieldControls {
         this.fieldData.initialValues,
       );
       this.hiddenItemNamesForInit.push(...hiddenItemNames);
-      Object.assign(
-        this.unsubscribing,
-        FieldControls.setUnsubscribing(hiddenItemNames),
-      );
+      Object.assign(this.unsubscribing, FieldControls.setUnsubscribing(hiddenItemNames));
 
       this.formApi = FinalForm.createForm({
         initialValues: ((initialValues) => {
@@ -695,9 +629,7 @@ export default class FieldControls {
         },
       });
 
-      this.controls.push(
-        ...this.$root.querySelectorAll(`[${this.config.FIELD_CONTROL}]`),
-      );
+      this.controls.push(...this.$root.querySelectorAll(`[${this.config.FIELD_CONTROL}]`));
       this.controls.forEach((input) => {
         this.registerField(input);
       });

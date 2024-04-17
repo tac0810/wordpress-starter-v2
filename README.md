@@ -14,16 +14,19 @@ WordPress テーマ構築のための開発環境です。[docker](https://www.d
 ```bash
 npm run setup:init
 ```
+
 テーマ名と[ACF Pro](https://www.advancedcustomfields.com/pro/) の[ライセンスキー](https://www.advancedcustomfields.com/resources/how-to-activate/)を入力します。
 
 開発環境の起動:
 
 WordPressの起動
+
 ```bash
 docker compose up --build
 ```
 
 viteの起動
+
 ```bash
 npm run dev
 ```
