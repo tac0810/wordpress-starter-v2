@@ -3,5 +3,6 @@
 
 @import "tailwindcss/components";
 @import "prose";
+@import "editor";
 
 @import "tailwindcss/utilities";
