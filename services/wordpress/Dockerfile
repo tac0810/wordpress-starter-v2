@@ -1,7 +1,7 @@
 FROM wordpress:php8.1-apache
 
 RUN apt-get update \
-		&& apt-get -y install vim wget unzip \
+		&& apt-get -y install vim wget unzip less \
 		&& docker-php-ext-install pdo_mysql \
 		&& curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
 		&& composer --version

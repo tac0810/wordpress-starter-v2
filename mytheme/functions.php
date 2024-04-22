@@ -8,7 +8,7 @@ define("THEME_NAME", basename(__DIR__));
 
 require_once __DIR__ . "/vendor/autoload.php";
 
-require_once __DIR__ . "/inc/_helper.php";
+require_once __DIR__ . "/inc/_helpers.php";
 
 require_once __DIR__ . "/inc/dashboard.php";
 require_once __DIR__ . "/inc/admin.php";
