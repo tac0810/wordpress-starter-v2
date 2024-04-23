@@ -1,10 +1,10 @@
 {
   "scripts": {
-    "setup:init": "node scripts/init.cjs",
-    "setup:faker": "zx scripts/faker.cjs",
+    "setup:init": "node scripts/init.mjs",
+    "setup:faker": "zx scripts/faker.mjs",
     "dev": "vite --host",
     "build": "vite build",
-    "logger": "node scripts/logger.cjs",
+    "logger": "node scripts/logger.mjs",
     "format": "prettier . --write"
   },
   "devDependencies": {

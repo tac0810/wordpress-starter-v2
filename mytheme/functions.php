@@ -83,3 +83,11 @@ add_filter(
 );
 
 add_filter("show_admin_bar", "__return_false");
+
+
+if ($_ENV["IS_DEVELOPMENT"] && function_exists("acf_pro_get_license_key")) {
+  $license = acf_pro_get_license_key();
+  if (!$license && function_exists("acf_pro_activate_license")) {
+    acf_pro_activate_license($_ENV["ACF_PRO_KEY"]);
+  }
+}
