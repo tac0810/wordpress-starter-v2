@@ -1,21 +1,15 @@
 import { $ } from "zx";
-import { confirm } from "@inquirer/prompts";
 
-const fakerPath = "/var/www/html/faker/entry.sh";
+const argv = minimist(process.argv.slice(2), {
+  string: ["path"],
+  alias: {
+    p: "path",
+  },
+});
 
 try {
-  // const confirmRename = await confirm({
-  //   message: `Insert fake data?`,
-  //   default: false,
-  // });
-  //
-  // if (!confirmRename) {
-  //   echo("Finished!");
-  // 	process.exit(0);
-  // }
-
   const { stdout: containerName } = await $`docker ps -f name=wordpress --format "{{.Names}}"`;
-  const process = $.spawn("docker", ["exec", containerName.trim(), "bash", fakerPath]);
+  const process = $.spawn("docker", ["exec", containerName.trim(), "bash", argv.path]);
 
   process.stdout.on("data", (data) => {
     console.log(data.toString());
@@ -29,5 +23,5 @@ try {
     console.log(`child process exited with code ${code}`);
   });
 } catch (e) {
-  console.log(e);
+  console.error(e);
 }

@@ -13,6 +13,7 @@ services:
       - "./services/wordpress/composer.json:/var/www/html/composer.json"
       - "./${THEME_NAME}:/var/www/html/wp-content/themes/${THEME_NAME}"
       - "./services/wordpress/faker:/var/www/html/faker"
+      - "./services/wordpress/portal:/var/www/html/portal"
     environment:
       IS_DEVELOPMENT: 1
       COMPOSER_ALLOW_SUPERUSER: 1

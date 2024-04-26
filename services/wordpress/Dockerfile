@@ -1,8 +1,7 @@
 FROM wordpress:php8.1-apache
 
 RUN apt-get update \
-		&& apt-get -y install vim wget unzip less \
-		&& docker-php-ext-install pdo_mysql \
+		&& apt-get -y install vim wget zip unzip less default-mysql-client \
 		&& curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
 		&& composer --version
 
@@ -10,6 +9,8 @@ RUN apt-get update \
 #    && chmod +x mhsendmail_linux_amd64 \
 #    && mv mhsendmail_linux_amd64 /usr/local/bin/mhsendmail \
 #    && echo 'sendmail_path = "/usr/local/bin/mhsendmail --smtp-addr=mailhog:1025"' > /usr/local/etc/php/conf.d/sendmail.ini
+
+RUN docker-php-ext-install pdo_mysql
 
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
     && chmod +x wp-cli.phar \
