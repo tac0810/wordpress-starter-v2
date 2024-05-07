@@ -26,7 +26,7 @@ function my_acf_block_render_callback($block, $content, $is_preview)
     $context[$key] = $value;
   }
 
-  renderTemplates("blocks/" . $block_slug . ".twig", $context);
+  render_templates("blocks/" . $block_slug . ".twig", $context);
 }
 
 function my_get_attachment_source($attachment_id, $size = "thumbnail", $icon = false, $attr = "")

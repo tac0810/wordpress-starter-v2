@@ -94,7 +94,7 @@ add_filter("timber/twig", function ($twig) {
 
 add_filter("timber/context", function ($context) {
   $context["IS_DEVELOPMENT"] = $_ENV["IS_DEVELOPMENT"];
-  $context["IS_VITE_RUNNING"] = checkViteConnection();
+  $context["IS_VITE_RUNNING"] = check_vite_connection();
 
   $context["options"] = get_fields("options");
 

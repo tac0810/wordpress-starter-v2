@@ -32,7 +32,7 @@ function debug($obj, $label = "")
   echo "</div>";
 }
 
-function renderTemplates($templates, $context)
+function render_templates($templates, $context)
 {
   $IS_DEVELOPMENT = $context["IS_DEVELOPMENT"];
   $render = Timber::compile($templates, $context);
@@ -44,7 +44,7 @@ function renderTemplates($templates, $context)
   }
 }
 
-function checkViteConnection()
+function check_vite_connection()
 {
   if (!$_ENV["IS_DEVELOPMENT"]) {
     return false;

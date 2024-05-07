@@ -3,7 +3,7 @@
 namespace WordPressStarter\Theme;
 
 add_action("admin_enqueue_scripts", function () {
-  $IS_VITE_RUNNING = checkViteConnection();
+  $IS_VITE_RUNNING = check_vite_connection();
   global $pagenow;
   if (
     ($_ENV["IS_DEVELOPMENT"] || $IS_VITE_RUNNING) &&

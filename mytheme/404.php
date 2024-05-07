@@ -5,4 +5,4 @@ namespace WordPressStarter\Theme;
 use Timber;
 
 $context = Timber::context();
-renderTemplates("404.twig", $context);
+render_templates("404.twig", $context);

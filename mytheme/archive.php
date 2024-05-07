@@ -28,4 +28,4 @@ if (is_day()) {
 
 $context["posts"] = Timber::get_posts();
 
-renderTemplates($templates, $context);
+render_templates($templates, $context);

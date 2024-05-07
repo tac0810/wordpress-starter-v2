@@ -12,4 +12,4 @@ if (is_home()) {
   array_unshift($templates, "front-page.twig", "home.twig");
 }
 
-renderTemplates($templates, $context);
+render_templates($templates, $context);
