@@ -3,7 +3,7 @@
     "setup:init": "node scripts/init.mjs",
     "setup:import": "zx scripts/exec-script.mjs --p /var/www/html/portal/import.sh",
     "setup:export": "zx scripts/exec-script.mjs --p /var/www/html/portal/export.sh",
-    "setup:faker": "zx scripts/exec-script.mjs /var/www/html/faker/entry.sh",
+    "setup:faker": "zx scripts/exec-script.mjs --p /var/www/html/faker/entry.sh",
     "dev": "vite --host",
     "build": "vite build",
     "logger": "node scripts/logger.mjs",
