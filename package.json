@@ -4,8 +4,10 @@
     "setup:import": "zx scripts/exec-script.mjs --p /var/www/html/portal/import.sh",
     "setup:export": "zx scripts/exec-script.mjs --p /var/www/html/portal/export.sh",
     "setup:faker": "zx scripts/exec-script.mjs --p /var/www/html/faker/entry.sh",
-    "dev": "vite --host",
-    "build": "vite build",
+    "dev": "[ -f .env ] && npm run base:dev || (echo '.env file not found' && exit 1)",
+    "build": "[ -f .env ] && npm run base:build || (echo '.env file not found' && exit 1)",
+    "base:dev": "vite --host",
+    "base:build": "vite build",
     "logger": "node scripts/logger.mjs",
     "format": "prettier . --write"
   },
