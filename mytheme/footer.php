@@ -23,4 +23,4 @@ if (!isset($timberContext)) {
 $timberContext["content"] = ob_get_contents();
 ob_end_clean();
 $templates = ["page-plugin.twig"];
-render_templates($templates, $timberContext);
+render_timber_templates($templates, $timberContext);

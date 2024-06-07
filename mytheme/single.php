@@ -9,9 +9,9 @@ $timber_post = Timber::get_post();
 $context["post"] = $timber_post;
 
 if (post_password_required($timber_post->ID)) {
-  render_templates("single-password.twig", $context);
+  render_timber_templates("single-password.twig", $context);
 } else {
-  render_templates(
+  render_timber_templates(
     [
       "single-" . $timber_post->ID . ".twig",
       "single-" . $timber_post->post_type . ".twig",
