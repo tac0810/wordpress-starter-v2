@@ -1,4 +1,5 @@
 import fs from "fs/promises";
+import f from "fs";
 import path from "path";
 import { input, password, confirm } from "@inquirer/prompts";
 
@@ -31,8 +32,8 @@ async function updateEnvFile(key, value) {
     envData[key] = value;
 
     newData = Object.entries(envData)
-    .map(([k, v]) => `${k}=${v}`)
-    .join("\n");
+      .map(([k, v]) => `${k}=${v}`)
+      .join("\n");
 
     await fs.writeFile(envFilePath, newData);
     console.log(".envファイルを更新しました。");
@@ -83,6 +84,24 @@ Theme Name: ${themeName}
   }
 }
 
+function getThemeDirName() {
+  const directories = f.readdirSync(root).filter((file) => {
+    return f.statSync(path.join(root, file)).isDirectory();
+  });
+
+  // `theme.json`を含むディレクトリを探す
+  let themeDir = "";
+  for (const dir of directories) {
+    const themeJsonPath = path.join(root, dir, "theme.json");
+    if (f.existsSync(themeJsonPath)) {
+      themeDir = dir;
+      break;
+    }
+  }
+
+  return themeDir;
+}
+
 const confirmInit = await confirm({
   message: `Initialize?`,
   default: false,
@@ -92,23 +111,25 @@ if (!confirmInit) {
   process.exit(0);
 }
 
-const themeName = await input({ message: "Input theme name..." });
-
-await generateEnvFile(themeName);
+let themeName = getThemeDirName();
 
 const confirmRename = await confirm({
-  message: `Rename mytheme to ${themeName}?`,
+  message: `Rename theme name? current theme name: ${themeName}.`,
   default: false,
 });
 
-if (confirmRename) {
+if(confirmRename) {
+  themeName = await input({ message: "Input theme name...", default: themeName });
   await renameTheme(themeName);
   await generateThemeStyle(themeName);
 }
 
+await generateEnvFile(themeName);
+
 const confirmGenerateAuthJson = await confirm({
   message: `Generate auth.json?`,
 });
+
 if (confirmGenerateAuthJson) {
   const token = await password({ message: "Input ACF PRO LICENCE KEY..." });
   await generateAuthJson(token);

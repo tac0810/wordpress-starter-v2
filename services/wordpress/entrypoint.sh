@@ -30,6 +30,7 @@ if [ ! -e "$root_path/index.php" ]; then
 	wp site switch-language ja --allow-root
 
 	wp plugin install 'https://downloads.wordpress.org/plugin/intuitive-custom-post-order.3.1.2.zip' --activate --allow-root
+	wp plugin install 'https://downloads.wordpress.org/plugin/wordpress-seo.22.5.zip' --activate --allow-root
 fi
 
 cd $root_path
