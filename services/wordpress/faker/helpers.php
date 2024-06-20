@@ -3,7 +3,7 @@
 
 function _wp($args)
 {
-  $command = sprintf("wp %s", $args);
+  $command = sprintf("wp %s --allow-root", $args);
   echo $command . "\n";
 
   $output = null;
