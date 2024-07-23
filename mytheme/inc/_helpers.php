@@ -1,5 +1,24 @@
 <?php
 
+function get_rel_uri($current_uri)
+{
+  $current_uri = Timber\URLHelper::get_rel_url($current_uri, true);
+  $current_uri = Timber\URLHelper::unpreslashit($current_uri);
+  return Timber\URLHelper::remove_trailing_slash($current_uri);
+}
+
+function get_current_url()
+{
+  $current_url = Timber\URLHelper::get_current_url();
+  return get_rel_uri($current_url);
+}
+
+function is_current($path)
+{
+  $current_url = get_current_url();
+  return strpos($current_url, $path) === 0;
+}
+
 function debug($obj, $label = "")
 {
   $label = "[Debug] : {$label}";

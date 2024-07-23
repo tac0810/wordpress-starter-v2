@@ -11,6 +11,36 @@ Timber::$dirname = ["views"];
 
 add_filter("timber/twig", function ($twig) {
   $twig->addFunction(
+    new Twig\TwigFunction("get_rel_uri", function ($url) {
+      return get_rel_uri($url);
+    })
+  );
+
+  $twig->addFunction(
+    new Twig\TwigFunction("get_current_url", function () {
+      return get_current_url();
+    })
+  );
+
+  $twig->addFunction(
+    new Twig\TwigFunction("is_current", function ($path) {
+      return is_current($path);
+    })
+  );
+
+  $twig->addFunction(
+    new Twig\TwigFunction("get_field", function ($selector, $id) {
+      return get_field($selector, $id);
+    })
+  );
+
+  $twig->addFunction(
+    new Twig\TwigFunction("assets_path", function ($path) {
+      return get_template_directory_uri() . "/assets/" . $path;
+    })
+  );
+
+  $twig->addFunction(
     new Twig\TwigFunction("debug", function ($value) {
       return debug($value);
     })
@@ -96,12 +126,38 @@ add_filter("timber/context", function ($context) {
   $context["IS_DEVELOPMENT"] = $_ENV["IS_DEVELOPMENT"];
   $context["IS_VITE_RUNNING"] = check_vite_connection();
 
-  $context["options"] = get_fields("options");
-
-  $context["about_post"] = Timber::get_post([
-    "name" => "about",
-    "post_type" => "page",
-  ]);
+  $context["navigation"] = [
+    "home" => home_url(),
+    "main" => [
+      "about" => [
+        "label" => "私たちについて",
+        "link" => get_permalink(get_page_by_path("about")),
+      ],
+      "news" => [
+        "label" => [
+          "en" => "News",
+          "ja" => "お知らせ",
+        ],
+        "link" => get_post_type_archive_link("news"),
+      ],
+      "contact" => [
+        "label" => [
+          "en" => "Contact",
+          "ja" => "お問いわせ",
+        ],
+        "link" => get_permalink(get_page_by_path("contact")),
+      ],
+    ],
+    "sub" => [
+      "privacy" => [
+        "label" => [
+          "en" => "Privacy Policy",
+          "ja" => "プライバシーポリシー",
+        ],
+        "link" => get_permalink(get_page_by_path("privacy-policy")),
+      ],
+    ],
+  ];
 
   return $context;
 });
