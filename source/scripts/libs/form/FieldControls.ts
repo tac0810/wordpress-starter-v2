@@ -308,7 +308,7 @@ export default class FieldControls {
           const target = <HTMLInputElement>e.target;
 
           // @ts-ignore
-          change(type === "checkbox" ? target.checked : target.value);
+          change(type === "checkbox" ? Boolean(target.checked) : target.value);
         });
         input.addEventListener("focus", () => focus());
         input.setAttribute(this.config.FIELD_REGISTRATION, "registered");
@@ -318,9 +318,9 @@ export default class FieldControls {
     const updateStateValue = (input: InputElement, fieldState: FinalForm.FieldState<any>) => {
       const { value } = fieldState;
       if (input.type === "checkbox") {
-        (<HTMLInputElement>input).checked = !!value;
+        // (<HTMLInputElement>input).checked = value;
       } else if (input.type === "radio") {
-        (<HTMLInputElement>input).checked = value === input.value;
+        // (<HTMLInputElement>input).checked = value === input.value;
       } else {
         input.value = value === undefined ? "" : value;
       }
@@ -336,8 +336,9 @@ export default class FieldControls {
       name,
       (fieldState) => {
         const { error, touched } = fieldState;
-
-        updateStateValue(input, fieldState);
+        if (!!this.fieldData.initialValues[name]) {
+          updateStateValue(input, fieldState);
+        }
         registerEventListeners(input, fieldState);
 
         // show/hide errors
@@ -538,9 +539,9 @@ export default class FieldControls {
   private token = "";
 
   constructor({
-    customValidations = [],
-    config,
-  }: {
+                customValidations = [],
+                config,
+              }: {
     customValidations?: PatternValidation;
     config?: FieldControlsConfig;
   }) {
@@ -616,7 +617,8 @@ export default class FieldControls {
       this.formApi = FinalForm.createForm({
         initialValues: ((initialValues) => {
           if (customInitialValues) {
-            return customInitialValues(initialValues);
+            this.fieldData.initialValues = customInitialValues(initialValues)
+            return this.fieldData.initialValues;
           }
           return initialValues;
         })(this.fieldData.initialValues),
