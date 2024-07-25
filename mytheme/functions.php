@@ -91,3 +91,7 @@ if ($_ENV["IS_DEVELOPMENT"] && function_exists("acf_pro_get_license_key")) {
     acf_pro_activate_license($_ENV["ACF_PRO_KEY"]);
   }
 }
+
+remove_action( 'wp_enqueue_scripts', 'wp_enqueue_global_styles' );
+remove_action( 'wp_footer', 'wp_enqueue_global_styles', 1 );
+add_filter( 'comments_open', '__return_false' );
