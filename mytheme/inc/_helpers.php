@@ -19,6 +19,56 @@ function is_current($path)
   return strpos($current_url, $path) === 0;
 }
 
+function add_ids_to_heading_tags($html) {
+  $doc = new DOMDocument();
+  // HTMLをロードする前にエラーを抑制
+  libxml_use_internal_errors(true);
+  $doc->loadHTML('<?xml encoding="utf-8" ?>'. $html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+  libxml_clear_errors();
+
+  $tags = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+  $idCounter = 1;
+
+  foreach ($tags as $tag) {
+    $elements = $doc->getElementsByTagName($tag);
+    foreach ($elements as $element) {
+      $element->setAttribute('id', 'heading-' . $idCounter);
+      $idCounter++;
+    }
+  }
+
+  return $doc->saveHTML();
+}
+
+function get_heading_tags($html) {
+  $matches = [];
+  // 正規表現を使ってhタグをマッチングする
+  preg_match_all('/<(h[1-6])([^>]*)>(.*?)<\/\1>/', $html, $matches, PREG_SET_ORDER);
+
+  $hTags = [];
+  foreach ($matches as $match) {
+    $tag = $match[1];
+    $attributesString = $match[2];
+    $content = $match[3];
+
+    // 属性をパースする
+    $attributes = [];
+    preg_match_all('/(\w+)=["\']([^"\']*)["\']/', $attributesString, $attrMatches, PREG_SET_ORDER);
+    foreach ($attrMatches as $attr) {
+      $attributes[$attr[1]] = $attr[2];
+    }
+
+    // 結果を配列に格納する
+    $hTags[] = [
+      'tag' => $tag,
+      'content' => $content,
+      'attributes' => $attributes
+    ];
+  }
+
+  return $hTags;
+}
+
 function debug($obj, $label = "")
 {
   $label = "[Debug] : {$label}";

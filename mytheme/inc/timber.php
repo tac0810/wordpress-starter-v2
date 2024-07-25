@@ -119,6 +119,14 @@ add_filter("timber/twig", function ($twig) {
     })
   );
 
+  $twig->addFilter(
+    new Twig\TwigFilter( 'parse_heading_tags', 'get_heading_tags' )
+  );
+
+  $twig->addFilter(
+    new Twig\TwigFilter( 'add_ids_to_heading_tags', 'add_ids_to_heading_tags' )
+  );
+
   return $twig;
 });
 
