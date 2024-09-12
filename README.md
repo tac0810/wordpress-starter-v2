@@ -90,6 +90,7 @@ npx scaffdog generate block
 
 ## 関連リソース
 
+- [wordpress-starter](https://github.com/yuheiy/wordpress-starter) 
 - [Timber Docs for v1 – Timber Documentation](https://timber.github.io/docs/): Timber の公式ドキュメント
 - [The Timber Starter Theme](https://github.com/timber/starter-theme): Timber の公式スターターテーマ
 - [Twig - The flexible, fast, and secure PHP template engine](https://twig.symfony.com/): Twig の公式ドキュメント

@@ -10,7 +10,7 @@ questions:
     message: "block description"
     initial: "this is my custom block"
   icon:
-    message: "see https://developer.wordpress.org/resource/dashicons/#icons-block-editor"
+    message: "see https://developer.wordpress.org/resource/dashicons/"
     initial: "heading"
   category:
     message: "Please select a value."
@@ -40,7 +40,7 @@ questions:
 	"supports": {
 		"align": false,
 		"customClassName": false,
-		"mode": true,
+		"mode": false,
 		"anchor": false
 	},
 	"attributes": {},
@@ -54,7 +54,7 @@ questions:
 # `./source/{{ theme }}/views/blocks/{{ name }}.twig`
 
 ```twig
-{%#
+{#
 
 Available props
 
@@ -62,7 +62,7 @@ block
 fields
 is_preview
 
-#%}
+#}
 
 <div>
 Example
