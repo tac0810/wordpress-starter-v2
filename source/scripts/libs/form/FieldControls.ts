@@ -317,10 +317,16 @@ export default class FieldControls {
 
     const updateStateValue = (input: InputElement, fieldState: FinalForm.FieldState<any>) => {
       const { value } = fieldState;
-      if (input.type === "checkbox") {
-        // (<HTMLInputElement>input).checked = value;
-      } else if (input.type === "radio") {
-        // (<HTMLInputElement>input).checked = value === input.value;
+      if (type === "checkbox") {
+        const checkboxGroup = this.fieldData.initialValues[rawName];
+        if (Array.isArray(checkboxGroup)) {
+          const index = parseInt(name.match(/\[(\d+)\]/)[1], 10);
+          (<HTMLInputElement>input).checked = checkboxGroup[index] || false;
+        } else {
+          (<HTMLInputElement>input).checked = !!checkboxGroup;
+        }
+      } else if (type === "radio") {
+        (<HTMLInputElement>input).checked = value === input.value;
       } else {
         input.value = value === undefined ? "" : value;
       }
@@ -336,7 +342,7 @@ export default class FieldControls {
       name,
       (fieldState) => {
         const { error, touched } = fieldState;
-        if (!!this.fieldData.initialValues[name]) {
+        if (!!this.fieldData.initialValues[rawName]) {
           updateStateValue(input, fieldState);
         }
         registerEventListeners(input, fieldState);
@@ -506,12 +512,13 @@ export default class FieldControls {
     AUTO_REPLY_TARGET: "email",
   };
 
+  public fieldItemsCollection = new Map<string, FieldItemsCollection>();
+
   private $root!: HTMLElement;
   private controls = [];
   private hiddenItemNamesForInit = [];
   private unsubscribing = {};
   private unsubscribes = {};
-  private fieldItemsCollection = new Map<string, FieldItemsCollection>();
   private _fieldValuesCollection = new Map<
     string,
     {
@@ -539,9 +546,9 @@ export default class FieldControls {
   private token = "";
 
   constructor({
-                customValidations = [],
-                config,
-              }: {
+    customValidations = [],
+    config,
+  }: {
     customValidations?: PatternValidation;
     config?: FieldControlsConfig;
   }) {
@@ -617,7 +624,7 @@ export default class FieldControls {
       this.formApi = FinalForm.createForm({
         initialValues: ((initialValues) => {
           if (customInitialValues) {
-            this.fieldData.initialValues = customInitialValues(initialValues)
+            this.fieldData.initialValues = customInitialValues(initialValues);
             return this.fieldData.initialValues;
           }
           return initialValues;

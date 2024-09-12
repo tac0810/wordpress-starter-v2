@@ -1,6 +1,7 @@
 import FieldControls from "../libs/form/FieldControls";
+import Alpine from "alpinejs";
 
-export default () => {
+Alpine.data("formFields", () => {
   const fieldControls = new FieldControls({});
 
   return {
@@ -66,7 +67,7 @@ export default () => {
           return {
             ...initialValues,
             select: "Select1",
-            checkbox: [true, false, false],
+            checkbox: [true, false, true],
             radio: "radio1",
             name: "john doe",
             email: "foo@example.com",
@@ -86,4 +87,4 @@ export default () => {
       });
     },
   };
-};
+});
