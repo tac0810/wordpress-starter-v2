@@ -26,6 +26,8 @@ services:
       WORDPRESS_DB_PASSWORD: wordpress
       WORDPRESS_DB_NAME: wordpress
       ACF_PRO_KEY: "${ACF_PRO_KEY}"
+      SMTP_HOST: "smtp4dev"
+      SMTP_PORT: 25
     env_file:
       - ./.env
 
@@ -41,11 +43,13 @@ services:
     volumes:
       - db:/var/lib/mysql
 
-  mailhog:
-    image: mailhog/mailhog
+  smtp4dev:
+    image: rnwood/smtp4dev:v3
     ports:
-      - "8025:8025"
-      - "1025:1025"
+      - "8025:80"
+      - "1025:25"
+    environment:
+      - ServerOptions__HostName=smtp4dev
 
 volumes:
   wordpress:
