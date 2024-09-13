@@ -10,7 +10,7 @@ questions:
     message: "block description"
     initial: "this is my custom block"
   icon:
-    message: "see https://developer.wordpress.org/resource/dashicons/"
+    message: "see https://developer.wordpress.org/redashicons/"
     initial: "heading"
   category:
     message: "Please select a value."
@@ -27,7 +27,7 @@ questions:
 # Variables
 - name: `{{ inputs.name | kebab }}`
 
-# `./source/{{ theme }}/blocks/{{ name }}/block.json`
+# `./{{ theme }}/blocks/{{ name }}/block.json`
 
 ```json
 {
@@ -51,7 +51,7 @@ questions:
 }
 ```
 
-# `./source/{{ theme }}/views/blocks/{{ name }}.twig`
+# `./{{ theme }}/views/blocks/{{ name }}.twig`
 
 ```twig
 {#
@@ -70,7 +70,7 @@ Example
 
 ```
 
-# `./source/{{ theme }}/acf-json/group_sb_{{ name }}.json`
+# `./{{ theme }}/acf-json/group_sb_{{ name }}.json`
 
 ```json
 {
