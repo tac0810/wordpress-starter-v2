@@ -80,7 +80,7 @@ npx scaffdog generate block
 
 デフォルトでは全てのブロックが登録されているため、案件に応じて調整してください。
 
-1. `source/mytheme/inc/blocks.php` を [こちらのマニュアル](https://www.notion.so/aa04f8d8f2304439bd5c5edefceb61d8?pvs=4)を参考にセットアップしてください
+1. `source/mytheme/inc/blocks.php` を こちらのマニュアルを参考にセットアップしてください
 2. ブロックの name は前項の `ブロックの作成の仕方` の name に入力した値に `acf/` プレフィクスをつけたものを指定してください。eg. `heading` → `acf/heading`
 3. 管理画面の ACF から必要なフォームを指定してください。
 
